@@ -10,10 +10,10 @@ interface GridDataInterface {
   [key: string]: string | number;
 }
 const gridData = [
-  { name: "Chuck Norris", power: Infinity } as GridDataInterface,
-  { name: "Bruce Lee", power: 9000 } as GridDataInterface,
-  { name: "Jackie Chan", power: 7000 } as GridDataInterface,
-  { name: "Jet Li", power: 8000 } as GridDataInterface,
+  { name: "あかりの巻物", power: 100 } as GridDataInterface,
+  { name: "オイルの巻物", power: 100 } as GridDataInterface,
+  { name: "識別の巻物", power: 200 } as GridDataInterface,
+  { name: "集合の巻物", power: 300 } as GridDataInterface,
 ];
 </script>
 
