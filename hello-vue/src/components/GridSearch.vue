@@ -1,14 +1,15 @@
-<script setup>
-import { ref, computed } from "vue";
-
+<script setup lang="ts">
+import { computed } from "vue";
+interface GridDataInterface {
+  name: string;
+  power: number;
+  [key: string]: string | number;
+}
 const props = defineProps({
-  data: Array,
-  columns: Array,
-  filterKey: String,
+  data: { type: Array<GridDataInterface>, required: true },
+  columns: { type: Array<string>, required: true },
+  filterKey: { type: String, required: true },
 });
-
-const sortKey = ref("");
-const sortOrders = ref(props.columns.reduce((o, key) => ((o[key] = 1), o), {}));
 
 const filteredData = computed(() => {
   let { data, filterKey } = props;
@@ -20,24 +21,10 @@ const filteredData = computed(() => {
       });
     });
   }
-  const key = sortKey.value;
-  if (key) {
-    const order = sortOrders.value[key];
-    data = data.slice().sort((a, b) => {
-      a = a[key];
-      b = b[key];
-      return (a === b ? 0 : a > b ? 1 : -1) * order;
-    });
-  }
   return data;
 });
 
-function sortBy(key) {
-  sortKey.value = key;
-  sortOrders.value[key] *= -1;
-}
-
-function capitalize(str) {
+function capitalize(str: string) {
   return str.charAt(0).toUpperCase() + str.slice(1);
 }
 </script>
@@ -46,21 +33,15 @@ function capitalize(str) {
   <table v-if="filteredData.length">
     <thead>
       <tr>
-        <th
-          v-for="key in columns"
-          @click="sortBy(key)"
-          :class="{ active: sortKey == key }"
-          :key="key.id"
-        >
+        <th v-for="key in columns" :key="key.toString()">
           {{ capitalize(key) }}
-          <span class="arrow" :class="sortOrders[key] > 0 ? 'asc' : 'dsc'">
-          </span>
+          <span class="arrow"></span>
         </th>
       </tr>
     </thead>
     <tbody>
-      <tr v-for="entry in filteredData" :key="entry.id">
-        <td v-for="key in columns" :key="key.id">
+      <tr v-for="entry in filteredData" :key="entry.toString()">
+        <td v-for="key in columns" :key="key.toString()">
           {{ entry[key] }}
         </td>
       </tr>
