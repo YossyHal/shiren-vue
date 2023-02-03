@@ -7,4 +7,9 @@
     },
     "files.eol": "\n",
     "files.insertFinalNewline": true,
+    "eslint.workingDirectories": [
+        {
+            "mode": "auto"
+        }
+    ],
 }
